@@ -1,3 +1,6 @@
+#ifndef DURATIONS_H
+#define DURATIONS_H
+
 /*************************************************
  * Public Constants
  *************************************************/
@@ -15,3 +18,5 @@
 #define DHN 48U // dotted half note
 #define WN 64U // whole note
 #define DWN 96U // dotted whole note
+
+#endif // DURATIONS_H

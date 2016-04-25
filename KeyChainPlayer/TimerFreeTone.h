@@ -55,5 +55,5 @@
 
 #include <Arduino.h>
 
-void TimerFreeTone(uint8_t pin, uint8_t pin2, uint32_t frequency, uint32_t duration);
+void TimerFreeTone(uint8_t pin, uint8_t pin2, uint32_t frequency, uint32_t duration, float delay_between_notes=0.15f);
 #endif

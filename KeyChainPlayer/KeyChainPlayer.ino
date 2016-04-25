@@ -1,20 +1,55 @@
-#include "durations.h"
-#include "pitches.h"
+#include <avr/interrupt.h> // needed for the additional interrupt
+#include <avr/pgmspace.h>
+#include <avr/sleep.h>
+#include "MinorSwing.h"
 #include "TimerFreeTone.h"
 
-#define TONE_PIN 1 // Pin you have speaker/piezo connected to (be sure to include a 100 ohm resistor).
-#define TONE_PIN2 0 // Pin you have speaker/piezo connected to (be sure to include a 100 ohm resistor).
+#define adc_disable() (ADCSRA &= ~(1<<ADEN)) // disable ADC (before power-off)
+#define adc_enable()  (ADCSRA |=  (1<<ADEN)) // re-enable ADC
 
-int melody[] = { C5, D5, E5, F5, G5, A5, B5, C6 };
-int duration[] = { WN, WN, WN, WN, WN, WN, WN, DWN  };
+#define BTN_PIN 0
+#define TONE_PIN1 1  // Pin you have speaker/piezo connected to
+#define TONE_PIN2 2 // Pin you have speaker/piezo connected to
 
-const int SPEED_FACTOR = 16;
+volatile bool pushed = false;
 
-void setup() {
-  for (int thisNote = 0; thisNote < 8; thisNote++) { // Loop through the notes in the array.
-    TimerFreeTone(TONE_PIN, TONE_PIN2, melody[thisNote], duration[thisNote] * SPEED_FACTOR); // Play thisNote for duration.
-    delay(50); // Short delay between notes.
+const int SPEED_FACTOR = 8;
+
+ISR(PCINT0_vect){ // PB0 pin button interrupt
+  if (digitalRead(BTN_PIN) == HIGH) pushed = true;
+}
+
+void play() {
+  for (int thisNote = 0; thisNote < sizeof(melody)/sizeof(int); thisNote++) { // Loop through the notes in the array.
+    int note = pgm_read_word_near(melody + thisNote);
+    int len = pgm_read_word_near(duration+ thisNote);
+    TimerFreeTone(TONE_PIN1, TONE_PIN2, note, len * SPEED_FACTOR); // Play thisNote for duration.
+    if (pushed) break;
   }
 }
 
-void loop() {}
+void powerDown() {
+  set_sleep_mode(SLEEP_MODE_PWR_DOWN);
+  sleep_enable();
+  sleep_cpu();
+  sleep_disable();
+}
+
+void setup() {
+  pinMode(BTN_PIN, INPUT);
+  pinMode(TONE_PIN1, OUTPUT);
+  pinMode(TONE_PIN2, OUTPUT);
+
+  adc_disable();
+  PCMSK |= 0b00000001;  // pin change mask: listen to portb bit 1
+  GIMSK |= 0b00100000;  // enable PCINT interrupt
+}
+
+void loop() {
+  delay(400);
+  pushed = false;
+  play();
+  delay(400);
+  powerDown();
+}
+

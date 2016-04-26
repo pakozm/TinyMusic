@@ -10,6 +10,7 @@
 #define BTN_PIN 0
 #define TONE_PIN1 1  // Pin you have speaker/piezo connected to
 #define TONE_PIN2 2 // Pin you have speaker/piezo connected to
+#define LED_PIN 4
 
 volatile bool pushed = false;
 
@@ -20,10 +21,14 @@ ISR(PCINT0_vect){ // PB0 pin button interrupt
 }
 
 void play() {
+  uint32_t time = 0;
   for (int thisNote = 0; thisNote < sizeof(melody)/sizeof(int); thisNote++) { // Loop through the notes in the array.
     int note = pgm_read_word_near(melody + thisNote);
-    int len = pgm_read_word_near(duration+ thisNote);
+    int len = pgm_read_word_near(duration + thisNote);
+    if (time % (2*WN) == WN && note != ZZ) digitalWrite(LED_PIN, HIGH);
     TimerFreeTone(TONE_PIN1, TONE_PIN2, note, len * SPEED_FACTOR); // Play thisNote for duration.
+    digitalWrite(LED_PIN, LOW);
+    time += len;
     if (pushed) break;
   }
 }
@@ -39,6 +44,7 @@ void setup() {
   pinMode(BTN_PIN, INPUT);
   pinMode(TONE_PIN1, OUTPUT);
   pinMode(TONE_PIN2, OUTPUT);
+  pinMode(LED_PIN, OUTPUT);
 
   adc_disable();
   PCMSK |= 0b00000001;  // pin change mask: listen to portb bit 1

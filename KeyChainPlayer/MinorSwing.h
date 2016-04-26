@@ -105,6 +105,7 @@ PROGMEM const int melody[] =   {
   
   ZZ, // 65
 };
+
 PROGMEM const int duration[] = {
   WN, WN, WN+HN, EN, EN, QN, // 0
   WN, HN, HN+WN, WN, // 0

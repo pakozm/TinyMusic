@@ -13,7 +13,7 @@
 
 volatile bool pushed = false;
 
-const int SPEED_FACTOR = 8;
+const int SPEED_FACTOR = 3;
 
 ISR(PCINT0_vect){ // PB0 pin button interrupt
   if (digitalRead(BTN_PIN) == HIGH) pushed = true;

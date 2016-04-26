@@ -53,7 +53,7 @@ PROGMEM const int melody[] =   {
   D4, B3, AS3, A3, GS3, B3, D4, F4, // 23
   E4, C4, A3, C4, ZZ, A3, // 24
 
-  C4, E4, A4, C5, E5, G5, ZZ, F5, // 25
+  C4, E4, A4, C5, E5, G5, F5, // 25
   D5, ZZ, F5, // 26
   A5, ZZ, F5, D5, A4, F4, D4, // 27
   F4, E4, A4, ZZ, // 28
@@ -131,7 +131,7 @@ PROGMEM const int duration[] = {
 
   WN+HN, HN, HN, HN, HN, HN, // 5
   QN, QN, HN, HN, HN, WN, WN, // 6
-  WN, QN, QN, HN, WN, QN, QN, HN, // 7
+  WN, HNT, HNT, HNT, WN, HNT, HNT, HNT, // 7
   HN, HN, WN, WN, WN, // 8
 
   WN+HN, HN, WN, HN, HN, // 9
@@ -154,7 +154,7 @@ PROGMEM const int duration[] = {
   WN, QN, QN, HN, HN, HN, HN, HN, // 23
   HN, HN, WN, WN, HN, HN, // 24
 
-  HN, HN, HN, HN, HN, HN, HN, HN, // 25
+  HN, HN, HN, HN, WNT, WNT, WNT, // 25
   WN, 2*WN+HN, HN, // 26
   WN, HN, HN, HN, HN, HN, HN, // 27
   WN, WN, WN, WN, // 28
@@ -189,9 +189,9 @@ PROGMEM const int duration[] = {
   WN, WN, WN, WN, // 51
   WN, WN, HN, QN, QN, QN, QN, QN, QN, // 52
 
-  WN, WN, QN, QN, HN, QN, QN, HN, // 53
-  QN, QN, HN, QN, QN, HN, QN, QN, HN, QN, QN, HN, // 54
-  QN, QN, HN, QN, QN, QN, QN, WN, HN, HN, // 55
+  WN, WN, HNT, HNT, HNT, HNT, HNT, HNT, // 53
+  HNT, HNT, HNT, HNT, HNT, HNT, HNT, HNT, HNT, HNT, HNT, HNT, // 54
+  HNT, HNT, HNT, QN, QN, QN, QN, WN, HN, HN, // 55
   HN, HN, HN, HN, WN+HN, HN, // 56
 
   HN, HN, HN, HN, HN, HN, HN, HN, // 57

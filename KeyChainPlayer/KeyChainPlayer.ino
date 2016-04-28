@@ -21,16 +21,20 @@ ISR(PCINT0_vect){ // PB0 pin button interrupt
 }
 
 void play() {
+  bool led_on = false;
   uint32_t time = 0;
   for (int thisNote = 0; thisNote < sizeof(melody)/sizeof(int); thisNote++) { // Loop through the notes in the array.
     int note = pgm_read_word_near(melody + thisNote);
     int len = pgm_read_word_near(duration + thisNote);
-    if (time % (2*WN) == WN && note != ZZ) digitalWrite(LED_PIN, HIGH);
+    led_on = !led_on;
+    if (note == ZZ) led_on = false;
+    digitalWrite(LED_PIN, led_on ? HIGH : LOW);
     TimerFreeTone(TONE_PIN1, TONE_PIN2, note, len * SPEED_FACTOR); // Play thisNote for duration.
-    digitalWrite(LED_PIN, LOW);
+    digitalWrite(LED_PIN, led_on ? LOW : HIGH);
     time += len;
     if (pushed) break;
   }
+  digitalWrite(LED_PIN, LOW);
 }
 
 void powerDown() {

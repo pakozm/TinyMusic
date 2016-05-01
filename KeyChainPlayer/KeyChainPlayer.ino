@@ -98,9 +98,9 @@ void setup() {
 
 void loop() {
   delay(400);
+  powerDown();
+  delay(400);
   pushed = false;
   play();
-  delay(400);
-  powerDown();
 }
 

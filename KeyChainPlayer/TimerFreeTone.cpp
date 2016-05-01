@@ -26,3 +26,4 @@ void TimerFreeTone(uint8_t pin1, uint8_t pin2, uint32_t frequency, uint32_t dura
   digitalWrite(pin2,LOW);     // Set pin high.
   delay(rest);
 }
+

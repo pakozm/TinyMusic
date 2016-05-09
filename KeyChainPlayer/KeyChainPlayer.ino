@@ -56,6 +56,7 @@ ISR(PCINT0_vect){ // PB0 pin button interrupt
 
 void play() {
   bool led1_on = false;
+  unsigned long t0 = micros();
   for (int thisNote = 0; thisNote < sizeof(melody)/sizeof(int); thisNote++) { // Loop through the notes in the array.
     int note = pgm_read_word_near(melody + thisNote);
     int len = pgm_read_word_near(duration + thisNote);
@@ -66,12 +67,14 @@ void play() {
     }
     digitalWrite(LED1_PIN, cur_led1 ? HIGH : LOW);
     digitalWrite(LED2_PIN, cur_led2 ? HIGH : LOW);
-    TimerFreeTone(BUZ_PIN1, BUZ_PIN2, note, len * SPEED_FACTOR); // Play thisNote for duration.
+    unsigned long t = (micros() - t0) / 1000;
+    TimerFreeTone(BUZ_PIN1, BUZ_PIN2, note, len * SPEED_FACTOR - t); // Play thisNote for duration.
     if (note != ZZ) {
       digitalWrite(LED1_PIN, cur_led1 ? LOW : HIGH);
       digitalWrite(LED2_PIN, cur_led2 ? LOW : HIGH);
     }
     if (pushed) break;
+    t0 = micros();
   }
   digitalWrite(LED1_PIN, LOW);
   digitalWrite(LED2_PIN, LOW);  

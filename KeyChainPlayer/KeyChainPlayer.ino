@@ -24,11 +24,11 @@
 
 /**
  * Attiny85 PINS
- *           ____
- * RESET   -|    |- 5V
- * LED1 3) -|    |- (2) BUZ2
- * LED2(4) -|    |- (1) BUZ2
- * GND     -|____|- (0) BTN
+ *            ____
+ * RESET    -|    |- 5V
+ * LED1 (3) -|    |- (2) BUZ2
+ * LED2 (4) -|    |- (1) BUZ2
+ * GND      -|____|- (0) BTN
  */
 
 #include <avr/eeprom.h>
@@ -48,7 +48,7 @@
 #define LED2_PIN 4
 
 volatile bool pushed = false;
-const int SPEED_FACTOR = 3;
+const float SPEED_FACTOR = 2.7f;
 
 ISR(PCINT0_vect){ // PB0 pin button interrupt
   if (digitalRead(BTN_PIN) == HIGH) pushed = true;

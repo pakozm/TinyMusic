@@ -114,7 +114,7 @@ PROGMEM const int duration[] = {
   WN, WN, WN+HN, EN, EN, QN, // 0
   WN, HN, HN+WN, WN, // 0
   WN, 3*WN, // 0
-  2*WN, // 0
+  4*WN, // 0
 
   WN, WN, WN+HN, EN, EN, QN, // 0
   WN, HN, HN+WN, WN, // 0

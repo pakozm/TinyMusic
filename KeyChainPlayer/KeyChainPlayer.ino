@@ -48,7 +48,7 @@
 #define LED2_PIN 4
 
 volatile bool pushed = false;
-const float SPEED_FACTOR = 2.7f;
+const float SPEED_FACTOR = 1.6f;
 const long RND_TIME = 40, RND_TIME2 = 20;
 
 ISR(PCINT0_vect){ // PB0 pin button interrupt
@@ -60,7 +60,7 @@ void play() {
   unsigned long t0 = micros();
   for (int thisNote = 0; thisNote < sizeof(melody)/sizeof(int); thisNote++) { // Loop through the notes in the array.
     long rnd = random(RND_TIME+1) - RND_TIME2;
-    int note = pgm_read_word_near(melody + thisNote);
+    int note = pgm_read_word_near(melody + thisNote) * 2;
     long len = pgm_read_word_near(duration + thisNote);
     bool cur_led1 = false, cur_led2 = false;
     if (note != ZZ) {

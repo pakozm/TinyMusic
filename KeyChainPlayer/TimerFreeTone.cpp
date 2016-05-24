@@ -20,9 +20,9 @@ void TimerFreeTone(uint8_t pin1, uint8_t pin2, uint32_t frequency, uint32_t dura
   uint32_t rest = duration*delay_between_notes;
   duration -= rest;
   uint32_t notch = 500000 / frequency;         // Calculate how long to leave the pin high and low.
-  uint32_t noteEnd = millis() + duration;      // Calculate when the note will end.
   int state1 = HIGH, state2 = LOW;
-  while(millis() <= noteEnd) {  // Loop for the duration.
+  uint32_t loops = (duration * 1000) / notch; // Calculate the number of loops to run.
+  for (uint32_t i=0; i<loops; i++) { // Loop for the desired number of loops.
     digitalWrite(pin1, state1);
     digitalWrite(pin2, state2);
     delayMicroseconds(notch); // Square wave duration (how long to leave pin high).

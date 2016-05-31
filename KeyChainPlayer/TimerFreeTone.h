@@ -30,8 +30,6 @@
 //   Play a note using pin1 and pin2 at frequency in Hz for duration in milliseconds.
 //
 //     Parameters:
-//       * pin1       - One pin speaker is wired to.
-//       * pin2       - Other pin speaker is wired to.
 //       * frequency  - Play the specified frequency (should work fairly well in the 100 to 15000 Hz range).
 //       * duration   - Set the duration to play in milliseconds. Range: 0 to 65535 (65.5 seconds).
 //
@@ -55,5 +53,5 @@
 
 #include <Arduino.h>
 
-void TimerFreeTone(uint8_t pin, uint8_t pin2, uint32_t frequency, uint32_t duration, float delay_between_notes=0.15f);
+void TimerFreeTone(byte pin, byte pin2, uint32_t frequency, uint32_t duration, float delay_between_notes=0.15f);
 #endif

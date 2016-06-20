@@ -133,10 +133,11 @@ void delayMicroseconds2(unsigned int us)
 
 void TimerFreeTone(byte pin1, byte pin2, uint32_t frequency, uint32_t duration, float delay_between_notes) {
   if (!frequency) { delay(duration); return; } // Frequency is false (zero), nothing to play, just delay for duration and return.
+  unsigned long t0 = micros();
   uint32_t rest = duration*delay_between_notes;
-  duration -= rest;
+  unsigned long duration_wo_delay = duration - rest;
   uint32_t notch = 500000 / frequency;         // Calculate how long to leave the pin high and low.
-  uint32_t loops = (duration * 500) / notch; // Calculate the number of loops to run.
+  uint32_t loops = (duration_wo_delay * 500) / notch; // Calculate the number of loops to run.
   uint32_t i=0;
   byte port_OFF_OFF = PORTB & ~((1<<pin1) | (1<<pin2));
   byte port_ON_OFF = port_OFF_OFF | (1<<pin1);
@@ -149,6 +150,7 @@ void TimerFreeTone(byte pin1, byte pin2, uint32_t frequency, uint32_t duration, 
     delayMicroseconds2(notch); // Square wave duration (how long to leave pin high).
   }
   PORTB &= port_OFF_OFF;
-  delay(rest);
+  unsigned long dt = (micros() - t0) / 1000;
+  if (dt < duration) delay(duration - dt);
 }
 

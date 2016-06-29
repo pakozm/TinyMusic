@@ -23,7 +23,9 @@ module llavero_abajo() {
                     translate([1.2,1.2,2]) cube([27.4,27.4,10.7]);
                     difference() {
                         translate([2.6,2.6,2]) cube([24.5,24.5,90]);
-                        rotate([0,0,45]) { translate([15,15,2]) cube([24,24,9.5]); }
+                        rotate([0,0,45]) { translate([15,15,2.6]) cube([24,24,9.5]); }
+                        translate([30,0,0]) { rotate([0,0,45]) { translate([15,15,2.6]) cube([24,24,9.5]); } }
+                        translate([30,-46,0]) { rotate([0,0,45]) { translate([15,15,2.6]) cube([24,24,9.5]); } }
                     }
                 }
     
@@ -43,3 +45,4 @@ module llavero_abajo() {
 }
 
 llavero_abajo();
+                        //translate([2.6,2.6,2.6]) cube([24.5,24.5,90]);

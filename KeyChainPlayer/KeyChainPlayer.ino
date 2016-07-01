@@ -62,17 +62,17 @@ void play() {
     long rnd = random(RND_TIME+1) - RND_TIME2;
     int note = pgm_read_word_near(melody + thisNote) * 2;
     long len = pgm_read_word_near(duration + thisNote);
-    bool cur_led = false;
     if (note != ZZ) {
-      cur_led = led_on = !led_on;
-      digitalWrite(LED1_PIN, cur_led ? HIGH : LOW);
-      digitalWrite(LED2_PIN, cur_led ? HIGH : LOW);
+      led_on = !led_on;
+      digitalWrite(LED1_PIN, led_on ? HIGH : LOW);
+      digitalWrite(LED2_PIN, led_on ? HIGH : LOW);
     }
     else {
       if (led_on) {
         digitalWrite(LED1_PIN, LOW);
         digitalWrite(LED2_PIN, LOW);
       }
+      led_on = false;
     }
     unsigned long t = (micros() - t0) / 1000;
     TimerFreeTone(BUZ_PIN1, BUZ_PIN2, note, max(1, len * SPEED_FACTOR - t + rnd)); // Play thisNote for duration.
